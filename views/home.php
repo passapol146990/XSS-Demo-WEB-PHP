@@ -15,7 +15,7 @@
     <ul id="messages">
       <?php foreach ($messages as $message) : ?>
       <li>
-        <?= htmlspecialchars($message['message']) ?>
+        <?= ($message['message']) ?>
       </li>
       <?php endforeach; ?>
     </ul>
