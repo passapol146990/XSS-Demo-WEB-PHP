@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    environment:
+      - PHP_UPLOAD_MAX_FILESIZE=10M
+      - PHP_POST_MAX_SIZE=20M
+      - PHP_MAX_FILE_UPLOADS=10
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    container_name: server-xss
+  mysql-xss:
+    image: mysql:5.7
+    container_name: mysql-xss
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+  phpmyadmin-xss:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-xss
+    links:
+      - mysql-xss
+    ports:
+      - "3030:80"
+    environment:
+      PMA_HOST: mysql-xss
+      MYSQL_ROOT_PASSWORD: admin
+      
